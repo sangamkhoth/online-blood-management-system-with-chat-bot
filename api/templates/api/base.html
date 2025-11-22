@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Hospitals{% endblock %}
+{% block content %}
+<h2>Hospitals</h2>
+
+<form method="get" class="search-bar">
+  <input type="text" name="q" placeholder="Search name..." value="{{ q }}">
+  <input type="text" name="city" placeholder="City..." value="{{ city }}">
+  <button type="submit" class="btn">Search</button>
+  <a href="{% url 'hospital_create' %}" class="btn">+ Add Hospital</a>
+</form>
+
+<table class="table">
+  <thead><tr><th>Name</th><th>City</th><th>Phone</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for h in hospitals %}
+      <tr>
+        <td>{{ h.name }}</td>
+        <td>{{ h.city }}</td>
+        <td>{{ h.phone }}</td>
+        <td>
+          <a href="{% url 'hospital_edit' h.pk %}">Edit</a> |
+          <a href="{% url 'hospital_delete' h.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No hospitals found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="pagination">
+  {% if hospitals.has_previous %}
+    <a href="?page={{ hospitals.previous_page_number }}&q={{ q }}&city={{ city }}">Previous</a>
+  {% endif %}
+  <span>Page {{ hospitals.number }} of {{ hospitals.paginator.num_pages }}</span>
+  {% if hospitals.has_next %}
+    <a href="?page={{ hospitals.next_page_number }}&q={{ q }}&city={{ city }}">Next</a>
+  {% endif %}
+</div>
+{% endblock %}

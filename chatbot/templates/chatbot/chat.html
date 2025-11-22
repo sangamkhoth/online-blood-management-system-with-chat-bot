@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BloodMS Chatbot 💬</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #ff4b5c, #ff7b8a);
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .chat-bubble {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+        .chat-container {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .chat-header {
+            background: #ff4b5c;
+            color: #fff;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .close-btn {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            cursor: pointer;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .message { padding: 10px; border-radius: 10px; margin-bottom: 10px; }
+        .user-message { background: #ffb3ba; align-self: flex-end; }
+        .bot-message { background: #f1f1f1; align-self: flex-start; }
+        .chat-input { display: flex; border-top: 1px solid #ddd; }
+        .chat-input input { flex: 1; padding: 12px; border: none; outline: none; }
+        .chat-input button { padding: 12px; background: #ff4b5c; border: none; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="chat-bubble" id="chat-toggle">💬</div>
+
+<div class="chat-container" id="chat-box">
+    <div class="chat-header">🩸 BloodMS Chatbot
+        <span class="close-btn" id="close-chat">×</span>
+    </div>
+
+    <div class="chat-messages" id="messages">
+        <div class="bot-message message">👋 Hello! How can I assist you?</div>
+    </div>
+
+    <div class="chat-input">
+        <input id="user-input" placeholder="Type your message...">
+        <button id="send-btn">Send</button>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById("chat-box");
+    const chatToggle = document.getElementById("chat-toggle");
+    const closeChat = document.getElementById("close-chat");
+    const messagesDiv = document.getElementById("messages");
+    const input = document.getElementById("user-input");
+    const btn = document.getElementById("send-btn");
+
+    chatToggle.onclick = () => { chatBox.style.display = "flex"; chatToggle.style.display = "none"; };
+    closeChat.onclick = () => { chatBox.style.display = "none"; chatToggle.style.display = "flex"; };
+
+    btn.onclick = sendMessage;
+    input.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
+
+    function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+
+        append("You", text, "user-message");
+        input.value = "";
+
+        fetch("/api/chat/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text })
+        })
+        .then(res => res.json())
+        .then(data => {
+            append("Bot", data.response || "⚠️ Error", "bot-message");
+        })
+        .catch(() => {
+            append("Bot", "⚠️ Server not responding.", "bot-message");
+        });
+    }
+
+    function append(sender, msg, cls) {
+        const div = document.createElement("div");
+        div.classList.add("message", cls);
+        div.innerHTML = `<strong>${sender}:</strong> ${msg}`;
+        messagesDiv.appendChild(div);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+</script>
+
+</body>
+</html>

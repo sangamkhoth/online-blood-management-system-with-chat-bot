@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodMS | Register</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe6e6, #f9fafc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            background: white;
+            width: 430px;
+            padding: 40px 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            color: crimson;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: crimson;
+            box-shadow: 0 0 5px rgba(220,20,60,0.3);
+        }
+
+        button {
+            width: 100%;
+            background: crimson;
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+
+        .extra-links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .extra-links a {
+            color: crimson;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: darkred;
+            background: #ffe6e6;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h1>🩸 BloodMS</h1>
+        <p>Create your account to get started</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="Choose a username" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password1">Password</label>
+            <input type="password" name="password1" placeholder="Enter password" required>
+
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" placeholder="Re-enter password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="extra-links">
+            <p>Already have an account? <a href="/accounts/login/">Login</a></p>
+            <p><a href="/">← Back to Home</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

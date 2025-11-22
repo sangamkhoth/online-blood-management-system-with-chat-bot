@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blood MS{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: #d10000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        nav h2 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        nav .menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        nav .menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Container */
+        .container {
+            width: 85%;
+            margin: 40px auto;
+        }
+
+        h2 {
+            font-weight: 600;
+            color: #d10000;
+        }
+
+        /* Buttons */
+        .btn {
+            background: #d10000;
+            color: white;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #a80000;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #d10000;
+            color: white;
+            font-weight: 600;
+        }
+
+        .search-bar input, 
+        .search-bar select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;      /* Push footer down */
+            padding: 25px;
+            background: #111;
+            text-align: center;
+            color: #ff4d4d;        /* 🔴 Red text */
+            font-size: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        footer .heart {
+            color: #ff1a1a;         /* Bright red heart */
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h2>Blood Management System</h2>
+
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/api/hospitals/">Hospitals</a>
+            <a href="/api/donors/">Donors</a>
+            <a href="/chatbot/">Chatbot</a>
+
+            {% if user.is_authenticated %}
+                <a href="/accounts/logout/">Logout</a>
+            {% else %}
+                <a href="/accounts/login/">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Blood Management System © — Built with 
+        <span class="heart">❤️</span> 
+        for emergencies
+    </footer>
+
+</body>
+</html>

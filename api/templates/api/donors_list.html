@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Donors{% endblock %}
+{% block content %}
+<h2>Donors</h2>
+
+<form method="get" class="search-bar">
+  <input type="text" name="q" placeholder="Search name..." value="{{ q }}">
+  <input type="text" name="city" placeholder="City..." value="{{ city }}">
+
+  <select name="blood_group">
+    <option value="">All Groups</option>
+    {% for g in blood_groups %}
+      <option value="{{ g }}" {% if bg == g %}selected{% endif %}>{{ g }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="btn">Search</button>
+  <a href="{% url 'donor_create' %}" class="btn">+ Add Donor</a>
+</form>
+
+<table class="table">
+  <thead><tr><th>Name</th><th>Blood</th><th>City</th><th>Available</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for d in donors %}
+      <tr>
+        <td>{{ d.name }}</td>
+        <td>{{ d.blood_group }}</td>
+        <td>{{ d.city }}</td>
+        <td>{{ d.available|yesno:"Yes,No" }}</td>
+        <td>
+          <a href="{% url 'donor_edit' d.pk %}">Edit</a> |
+          <a href="{% url 'donor_delete' d.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No donors found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="pagination">
+  {% if donors.has_previous %}
+    <a href="?page={{ donors.previous_page_number }}&q={{ q }}&city={{ city }}&blood_group={{ bg }}">Previous</a>
+  {% endif %}
+  <span>Page {{ donors.number }} of {{ donors.paginator.num_pages }}</span>
+  {% if donors.has_next %}
+    <a href="?page={{ donors.next_page_number }}&q={{ q }}&city={{ city }}&blood_group={{ bg }}">Next</a>
+  {% endif %}
+</div>
+
+{% endblock %}

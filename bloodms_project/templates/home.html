@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodMS | Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f9fafc, #ffe6e6);
+            color: #333;
+        }
+
+        header {
+            background-color: crimson;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            color: crimson;
+            margin-bottom: 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff5f5;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: #ffe6e6;
+        }
+
+        .card h3 {
+            color: crimson;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: crimson;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: darkred;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #777;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+            header h1 {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🩸 BloodMS</h1>
+        <nav>
+            {% if user.is_authenticated %}
+                <span>👋 {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="/accounts/login/">Login</a>
+                <a href="/accounts/register/">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome to Blood Management System</h2>
+            <p>Your all-in-one solution for emergency support, donor tracking, and real-time help.</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>💬 Chatbot</h3>
+                <p>Ask for help, locate hospitals, or get quick support using our smart chatbot.</p>
+                <a href="{% url 'chat_page' %}" class="btn">Open Chatbot</a>
+            </div>
+
+            <div class="card">
+                <h3>🏥 Hospitals</h3>
+                <p>Find hospitals near you and manage blood inventories in emergencies.</p>
+                <a href="/api/hospitals/" class="btn">View Hospitals</a>
+            </div>
+
+            <div class="card">
+                <h3>🩸 Donors</h3>
+                <p>Register, search, or contact blood donors instantly through our database.</p>
+                <a href="/api/donors/" class="btn">View Donors</a>
+            </div>
+
+            <div class="card">
+                <h3>🧠 API Access</h3>
+                <p>Developers can explore BloodMS REST APIs for integrations and analytics.</p>
+                <a href="/api/" class="btn">Explore API</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 BloodMS | Designed by Sangam Bishnoi
+    </footer>
+</body>
+</html>

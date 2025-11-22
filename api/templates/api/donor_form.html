@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{% if edit %}Edit Donor{% else %}Add Donor{% endif %}{% endblock %}
+{% block content %}
+<h2>{% if edit %}Edit{% else %}Add{% endif %} Donor</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn">Save</button>
+  <a href="{% url 'donors_list' %}">Cancel</a>
+</form>
+{% endblock %}

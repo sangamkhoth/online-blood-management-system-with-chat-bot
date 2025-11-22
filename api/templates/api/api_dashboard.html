@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}API Access{% endblock %}
+
+{% block content %}
+<div class="feature-card">
+    <h3>🧠 API Access</h3>
+    <p>Developers can explore BloodMS REST APIs for integrations and analytics.</p>
+    <a href="/api/hospitals/" class="btn btn-primary">Explore API</a>
+</div>
+
+<style>
+.feature-card {
+    background: #fff5f7;
+    padding: 30px;
+    width: 350px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: auto;
+    text-align: center;
+}
+.feature-card h3 {
+    color: #e40046;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.feature-card p {
+    font-size: 16px;
+    color: #444;
+}
+.feature-card .btn-primary {
+    margin-top: 15px;
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: #e40046;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+</style>
+{% endblock %}
+<a href="/api/" class="btn">Explore API</a>
